@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KodKit - Help Center</title>
+  <style>
+    :root {
+      /* Light Mode Colors */
+      --primary: #0071e3;
+      --secondary: #147ce5;
+      --accent: #06c;
+      --background: #f5f5f7;
+      --card-bg: #ffffff;
+      --text: #1d1d1f;
+      --text-secondary: #86868b;
+      --border: #d2d2d7;
+      --shadow: rgba(0, 0, 0, 0.1);
+
+      /* Transitions */
+      --transition-speed: 0.3s;
+    }
+
+    /* Dark Mode Colors */
+    .dark-mode {
+      --primary: rgb(100, 196, 209);
+      --secondary: #5ac8fa;
+      --accent: rgb(72, 251, 254);
+      --background: #1d1d1f;
+      --card-bg: #2c2c2e;
+      --text: #f5f5f7;
+      --text-secondary: #a1a1a6;
+      --border: #3d3d41;
+      --shadow: rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    }
+
+    body {
+      background-color: var(--background);
+      color: var(--text);
+      line-height: 1.5;
+      transition: background-color var(--transition-speed), color var(--transition-speed);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Header */
+    header {
+      background-color: var(--card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 1px 0 var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 48px;
+      font-weight: 600;
+      color: var(--text);
+      transition: color var(--transition-speed);
+    }
+
+    .logo-svg {
+      display: flex;
+      align-items: center;
+      margin-right: 12px;
+    }
+
+    .theme-logo {
+      width: 120px;
+      height: 40px;
+      filter: drop-shadow(0 0 0.65rem rgb(0, 0, 0)) brightness(0) saturate(100%) invert(9%) sepia(10%) saturate(200%) hue-rotate(169deg) brightness(95%) contrast(91%);
+      transition: filter var(--transition-speed);
+    }
+
+    /* Dark mode logo */
+    .dark-mode .theme-logo {
+      filter: drop-shadow(0 0 0.65rem rgb(255, 255, 255)) brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      font-size: 16px;
+      transition: color var(--transition-speed);
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      color: var(--text);
+      cursor: pointer;
+      font-size: 20px;
+      padding: 8px;
+      border-radius: 50%;
+      transition: background-color var(--transition-speed);
+    }
+
+    .theme-toggle:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+    /* İletişim Formu Stilleri */
+    .contact-section {
+      margin-top: 40px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-form {
+      margin-top: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background-color: var(--card-bg);
+      color: var(--text);
+      font-size: 16px;
+      transition: border-color var(--transition-speed), background-color var(--transition-speed);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .contact-form .btn {
+      background-color: var(--primary);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 980px;
+      border: none;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color var(--transition-speed), transform var(--transition-speed);
+    }
+
+    .contact-form .btn:hover {
+      background-color: var(--secondary);
+      transform: translateY(-2px);
+    }
+
+    .form-status {
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 8px;
+      display: none;
+    }
+
+    .form-status.success {
+      display: block;
+      background-color: rgba(52, 199, 89, 0.1);
+      border: 1px solid #34c759;
+      color: #34c759;
+    }
+
+    .form-status.error {
+      display: block;
+      background-color: rgba(255, 59, 48, 0.1);
+      border: 1px solid #ff3b30;
+      color: #ff3b30;
+    }
+
+    .dark-mode .theme-toggle:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Mobile menu button */
+    .mobile-menu-btn {
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 24px;
+      cursor: pointer;
+      display: none;
+    }
+
+    /* Page Header */
+    .page-header {
+      text-align: center;
+      padding: 80px 0 40px;
+    }
+
+    .page-header h1 {
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--text);
+      transition: color var(--transition-speed);
+    }
+
+    .page-header p {
+      font-size: 20px;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+      transition: color var(--transition-speed);
+    }
+
+    /* Help Content */
+    .help-container {
+      display: flex;
+      gap: 40px;
+      margin-bottom: 80px;
+    }
+
+    .help-sidebar {
+      width: 280px;
+      flex-shrink: 0;
+    }
+
+    .help-content {
+      flex-grow: 1;
+    }
+
+    .help-menu {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 6px var(--shadow);
+      position: sticky;
+      top: 100px;
+      transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+    }
+
+    .help-menu h3 {
+      font-size: 18px;
+      margin-bottom: 16px;
+      color: var(--text);
+      transition: color var(--transition-speed);
+    }
+
+    .help-menu ul {
+      list-style: none;
+    }
+
+    .help-menu ul li {
+      margin-bottom: 12px;
+    }
+
+    .help-menu a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color var(--transition-speed);
+      display: block;
+      padding: 8px 12px;
+      border-radius: 6px;
+    }
+
+    .help-menu a:hover {
+      color: var(--primary);
+      background-color: rgba(0, 113, 227, 0.05);
+    }
+
+    .dark-mode .help-menu a:hover {
+      background-color: rgba(100, 196, 209, 0.05);
+    }
+
+    .help-menu a.active {
+      color: var(--primary);
+      background-color: rgba(0, 113, 227, 0.1);
+      font-weight: 500;
+    }
+
+    .dark-mode .help-menu a.active {
+      background-color: rgba(100, 196, 209, 0.1);
+    }
+
+    .help-article {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 4px 6px var(--shadow);
+      transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+    }
+
+    .help-article h2 {
+      font-size: 28px;
+      margin-bottom: 24px;
+      color: var(--text);
+      transition: color var(--transition-speed);
+    }
+
+    .help-article h3 {
+      font-size: 20px;
+      margin: 32px 0 16px;
+      color: var(--text);
+      transition: color var(--transition-speed);
+    }
+
+    .help-article p {
+      margin-bottom: 16px;
+      color: var(--text-secondary);
+      transition: color var(--transition-speed);
+    }
+
+    .help-article ul, .help-article ol {
+      margin: 16px 0 16px 24px;
+      color: var(--text-secondary);
+      transition: color var(--transition-speed);
+    }
+
+    .help-article li {
+      margin-bottom: 8px;
+    }
+
+    .help-article img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 24px 0;
+      box-shadow: 0 4px 6px var(--shadow);
+      transition: box-shadow var(--transition-speed);
+    }
+
+    .help-article .note {
+      background-color: rgba(0, 113, 227, 0.1);
+      border-left: 4px solid var(--primary);
+      padding: 16px;
+      border-radius: 6px;
+      margin: 24px 0;
+      transition: background-color var(--transition-speed);
+    }
+
+
+    .dark-mode .help-article .note {
+      background-color: rgba(100, 196, 209, 0.1);
+    }
+
+    .help-article .tip {
+      background-color: rgba(52, 199, 89, 0.1);
+      border-left: 4px solid #34c759;
+      padding: 16px;
+      border-radius: 6px;
+      margin: 24px 0;
+      transition: background-color var(--transition-speed);
+    }
+
+    .dark-mode .help-article .tip {
+      background-color: rgba(48, 209, 88, 0.1);
+    }
+
+    .help-article code {
+      background-color: rgba(0, 0, 0, 0.05);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+      transition: background-color var(--transition-speed);
+    }
+
+    .dark-mode .help-article code {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .help-article .code-block {
+      background-color: rgba(0, 0, 0, 0.05);
+      padding: 16px;
+      border-radius: 8px;
+      font-family: monospace;
+      overflow-x: auto;
+      margin: 24px 0;
+      transition: background-color var(--transition-speed);
+    }
+
+    .dark-mode .help-article .code-block {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .search-box {
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 12px 16px 12px 40px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background-color: var(--card-bg);
+      color: var(--text);
+      font-size: 16px;
+      transition: border-color var(--transition-speed), background-color var(--transition-speed), color var(--transition-speed);
+    }
+
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .search-box i {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--card-bg);
+      color: var(--text);
+      padding: 80px 0 40px;
+      transition: background-color var(--transition-speed), color var(--transition-speed);
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      margin-bottom: 60px;
+    }
+
+    .footer-column h3 {
+      font-size: 20px;
+      margin-bottom: 24px;
+      color: var(--text);
+      font-weight: 600;
+      transition: color var(--transition-speed);
+    }
+
+    .footer-column ul {
+      list-style: none;
+    }
+
+    .footer-column ul li {
+      margin-bottom: 12px;
+    }
+
+    .footer-column a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color var(--transition-speed);
+    }
+
+    .footer-column a:hover {
+      color: var(--primary);
+    }
+
+    .copyright {
+      text-align: center;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+      color: var(--text-secondary);
+      font-size: 14px;
+      transition: color var(--transition-speed), border-color var(--transition-speed);
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .help-container {
+        flex-direction: column;
+      }
+
+      .help-sidebar {
+        width: 100%;
+      }
+
+      .help-menu {
+        position: static;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 576px) {
+      .page-header h1 {
+        font-size: 36px;
+      }
+
+      .help-article {
+        padding: 24px;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">
+          <div class="logo-svg">
+            <img src="./Assets/logo.svg" alt="KodKit Logo" class="theme-logo"">
+          </div>
+        </div>
+        <div class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="index.html#features">Features</a>
+          <a href="faq.html">FAQ</a>
+          <a href="index.html#screenshots">Screenshots</a>
+          <a href="index.html#download">Download</a>
+          <a href="index.html#about">About</a>
+          <a href="help.html">Help</a>
+        </div>
+        <button class="theme-toggle" id="themeToggle">
+          <i class="fas fa-moon"></i>
+        </button>
+        <button class="mobile-menu-btn">
+          <i class="fas fa-bars"></i>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Page Header -->
+<section class="page-header">
+  <div class="container">
+    <h1 style="display: flex; align-items: center; justify-content: center;">
+      <img src="./Assets/logo.svg" class="theme-logo" alt="KodKit Logo" style="width: 200px; height: 100px; margin-right: 16px; vertical-align: middle;">
+      Help Center
+    </h1>
+    <p>Learn how to use KodKit effectively with our comprehensive guides</p>
+  </div>
+</section>
+
+
+  <!-- Help Content -->
+  <section class="container">
+    <div class="help-container">
+      <!-- Sidebar -->
+      <div class="help-sidebar">
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search help articles...">
+        </div>
+        <div class="help-menu">
+          <h3>Getting Started</h3>
+          <ul>
+            <li><a href="#" class="active">Installation Guide</a></li>
+            <li><a href="#">KodKit Interface</a></li>
+            <li><a href="#">Creating Your First Project</a></li>
+            <li><a href="#">Saving and Loading Projects</a></li>
+          </ul>
+          <h3>Basic Features</h3>
+          <ul>
+            <li><a href="#">Working with Sprites</a></li>
+            <li><a href="#">Using Blocks</a></li>
+            <li><a href="#">Adding Sound</a></li>
+            <li><a href="#">Creating Animations</a></li>
+          </ul>
+          <h3>Advanced Topics</h3>
+          <ul>
+            <li><a href="#">Variables and Lists</a></li>
+            <li><a href="#">Custom Blocks</a></li>
+            <li><a href="#">Event Broadcasting</a></li>
+            <li><a href="#">Exporting Projects</a></li>
+          </ul>
+          <h3>Troubleshooting</h3>
+          <ul>
+            <li><a href="#">Common Issues</a></li>
+            <li><a href="#">Performance Tips</a></li>
+            <li><a href="#">Error Messages</a></li>
+            <li><a href="#">Contact Support</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="help-content">
+        <article class="help-article">
+          <h2>Installation Guide</h2>
+          <p>Welcome to KodKit! This guide will walk you through the process of installing KodKit on your Windows computer.</p>
+
+          <h3>System Requirements</h3>
+          <p>Before installing KodKit, make sure your computer meets the following requirements:</p>
+          <ul>
+            <li>Windows 10 or 11 operating system</li>
+            <li>4GB RAM (8GB recommended)</li>
+            <li>2GB free disk space</li>
+            <li>Intel Core i3 or equivalent (Core i5 or better recommended)</li>
+            <li>Internet connection</li>
+          </ul>
+
+          <h3>Download and Installation</h3>
+          <p>Follow these steps to install KodKit:</p>
+          <ol>
+            <li>Download the KodKit installer from our <a href="index.html#download" style="color: var(--primary);">download page</a>.</li>
+            <li>Once the download is complete, locate the installer file in your downloads folder.</li>
+            <li>Double-click the installer file to begin the installation process.</li>
+            <li>If prompted by Windows security, click "Yes" to allow the installer to make changes to your device.</li>
+            <li>In the installer window, click "Next" to continue.</li>
+            <li>Read and accept the license agreement, then click "Next".</li>
+            <li>Choose the installation location or use the default, then click "Next".</li>
+            <li>Select any additional components you want to install, then click "Next".</li>
+            <li>Click "Install" to begin the installation process.</li>
+            <li>Wait for the installation to complete.</li>
+            <li>Click "Finish" to complete the installation.</li>
+          </ol>
+
+          <div class="note">
+            <p><strong>Note:</strong> If you encounter any issues during installation, try running the installer as an administrator by right-clicking the installer file and selecting "Run as administrator".</p>
+          </div>
+
+          <h3>First Launch</h3>
+          <p>After installation, you can launch KodKit by:</p>
+          <ul>
+            <li>Double-clicking the KodKit icon on your desktop</li>
+            <li>Finding KodKit in your Start menu</li>
+            <li>Using the Windows search function to find "KodKit"</li>
+          </ul>
+
+          <p>When you first launch KodKit, you may be prompted to:</p>
+          <ul>
+            <li>Complete a brief tutorial (recommended for new users)</li>
+          </ul>
+
+          <div class="tip">
+            <p><strong>Tip:</strong> Kodkit will be upgraded by time, just let us know by contacting to us..</p>
+          </div>
+
+          <h3>Updating KodKit</h3>
+          <p>KodKit will automatically check for updates when you start the application (if you're connected to the internet). You can also manually check for updates by:</p>
+          <ol>
+            <li>Opening KodKit</li>
+            <li>Clicking on "Help" in the top menu</li>
+            <li>Selecting "Check for Updates"</li>
+          </ol>
+
+          <h3>Uninstalling KodKit</h3>
+          <p>If you need to uninstall KodKit, you can do so through the Windows Control Panel:</p>
+          <ol>
+            <li>Open the Control Panel</li>
+            <li>Select "Programs and Features" or "Apps & features" (depending on your Windows version)</li>
+            <li>Find KodKit in the list of installed programs</li>
+            <li>Select KodKit and click "Uninstall"</li>
+            <li>Follow the prompts to complete the uninstallation</li>
+          </ol>
+
+          <p>Alternatively, you can use the uninstaller included with KodKit:</p>
+          <ol>
+            <li>Open the Start menu</li>
+            <li>Find the KodKit folder</li>
+            <li>Click on "Uninstall KodKit"</li>
+            <li>Follow the prompts to complete the uninstallation</li>
+          </ol>
+
+          <div class="note">
+            <p><strong>Note:</strong> Uninstalling KodKit will not delete your saved projects by default. Your projects are stored in your Documents folder under wherever you save them.</p>
+          </div>
+
+          <h3>Need Help?</h3>
+          <p>If you encounter any issues during installation or have questions, please visit our <a href="faq.html" style="color: var(--primary);">FAQ page</a> or <a href="#" style="color: var(--primary);">contact our support team</a>.</p>
+
+        </article>
+      <!-- Bu kodu help.html sayfasında help-article içeriğinin sonuna ekleyin (help-article kapanış etiketinden önce) -->
+<div class="contact-section">
+  <h3>Contact us</h3>
+  <p>Feedback? Issues? Mail to us:</p>
+
+  <form id="contactForm" class="contact-form">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Your Mail Adress</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+
+    <div class="form-group">
+      <label for="subject">Subject</label>
+      <input type="text" id="subject" name="subject" required>
+    </div>
+
+    <div class="form-group">
+      <label for="message">Message</label>
+      <textarea id="message" name="message" rows="5" required></textarea>
+    </div>
+
+    <button type="submit" class="btn">Send</button>
+  </form>
+
+  <div id="formStatus" class="form-status"></div>
+</div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>KodKit</h3>
+          <ul>
+            <li><a href="index.html#features">Features</a></li>
+            <li><a href="index.html#screenshots">Screenshots</a></li>
+            <li><a href="index.html#download">Download</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Resources</h3>
+          <ul>
+            <li><a href="#">Documentation</a></li>
+            <li><a href="#">Tutorials</a></li>
+            <li><a href="#">Examples</a></li>
+
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Support</h3>
+          <ul>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="help.html">Help Center</a></li>
+            <li><a href="#">Report a Bug</a></li>
+            <li><a href="#">Request a Feature</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Legal</h3>
+          <ul>
+          <li><a href="tos.html">Terms of Service</a></li>
+
+          </ul>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2025 Ragno Games. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Dark Mode Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+
+    // Check for saved theme preference or use preferred color scheme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      body.classList.add('dark-mode');
+      themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    }
+
+    // Toggle theme
+    themeToggle.addEventListener('click', () => {
+      body.classList.toggle('dark-mode');
+
+      // Update button icon
+      if (body.classList.contains('dark-mode')) {
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        localStorage.setItem('theme', 'light');
+      }
+    });
+
+    // Help menu active state
+    const helpLinks = document.querySelectorAll('.help-menu a');
+
+    helpLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        // Remove active class from all links
+        helpLinks.forEach(otherLink => {
+          otherLink.classList.remove('active');
+        });
+
+        // Add active class to clicked link
+        link.classList.add('active');
+
+        // Here you would normally load the corresponding content
+        // For this demo, we'll just scroll to the top of the article
+        document.querySelector('.help-article').scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+  <script>
+    // İletişim Formu Gönderimi
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const subject = document.getElementById('subject').value;
+  const message = document.getElementById('message').value;
+  const formStatus = document.getElementById('formStatus');
+
+  // E-posta gönderme işlemi - E-posta adresinizi buraya ekleyin
+  const mailtoLink = `mailto:simseklermustafaberke@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`İsim: ${name}\nE-posta: ${email}\n\n${message}`)}`;
+
+  try {
+    window.location.href = mailtoLink;
+
+    // Form başarıyla gönderildi mesajı
+    formStatus.textContent = 'Mesajınız için teşekkürler! E-posta istemciniz açılıyor...';
+    formStatus.className = 'form-status success';
+
+    // Formu sıfırla
+    document.getElementById('contactForm').reset();
+
+    // 5 saniye sonra başarı mesajını gizle
+    setTimeout(() => {
+      formStatus.style.display = 'none';
+    }, 5000);
+
+  } catch (error) {
+    // Hata durumunda
+    formStatus.textContent = 'Bir hata oluştu. Lütfen daha sonra tekrar deneyin.';
+    formStatus.className = 'form-status error';
+  }
+});
+  </script>
+</body>
+</html>
