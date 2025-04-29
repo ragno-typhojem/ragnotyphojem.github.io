@@ -1,1 +1,2 @@
-# ragnotyphojem.github.io
+# KODKIT Website
+## Created using html-css-js
