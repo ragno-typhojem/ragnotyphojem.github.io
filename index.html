@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KodKit Early - Creative Coding for Everyone</title>
+  <style>
+    :root {
+      /* Light Mode Colors */
+      --primary: #0071e3;
+      --secondary: #147ce5;
+      --accent: #06c;
+      --background: #f5f5f7;
+      --card-bg: #ffffff;
+      --text: #1d1d1f;
+      --text-secondary: #86868b;
+      --border: #d2d2d7;
+      --shadow: rgba(0, 0, 0, 0.1);
+
+      /* Transitions */
+      --transition-speed: 0.3s;
+      --animation-speed: 0.8s;
+    }
+
+    /* Dark Mode Colors */
+    .dark-mode {
+      --primary:rgb(100, 196, 209);
+      --secondary: #5ac8fa;
+      --accent:rgb(72, 251, 254);
+      --background: #1d1d1f;
+      --card-bg: #2c2c2e;
+      --text: #f5f5f7;
+      --text-secondary: #a1a1a6;
+      --border: #3d3d41;
+      --shadow: rgba(0, 0, 0, 0.3);
+    }
+
+    /* Animasyonlar */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideInUp {
+      from {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideInLeft {
+      from {
+        transform: translateX(-50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        transform: translateX(50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes scaleIn {
+      from {
+        transform: scale(0.9);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-20px);
+      }
+      60% {
+        transform: translateY(-10px);
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(0, 113, 227, 0.7);
+      }
+      70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(0, 113, 227, 0);
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(0, 113, 227, 0);
+      }
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+      100% {
+        transform: translateY(0px);
+      }
+    }
+
+    @keyframes rotateIn {
+      from {
+        transform: rotate(-5deg) scale(0.9);
+        opacity: 0;
+      }
+      to {
+        transform: rotate(0) scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: -100% 0;
+      }
+      100% {
+        background-position: 200% 0;
+      }
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    }
+
+    body {
+      background-color: var(--background);
+      color: var(--text);
+      line-height: 1.5;
+      transition: background-color var(--transition-speed), color var(--transition-speed);
+      animation: fadeIn 1s ease-out;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Header */
+    header {
+      background-color: var(--card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 1px 0 var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+      animation: slideInDown 0.5s ease-out;
+    }
+
+    @keyframes slideInDown {
+      from {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 48px;
+      font-weight: 600;
+      color: var(--text);
+      transition: color var(--transition-speed);
+      animation: slideInLeft 0.7s ease-out;
+    }
+
+    .logo-placeholder {
+      width: 80px;
+      height: 80px;
+      margin-right: 12px;
+      border-radius: 8px;
+      background-color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      animation: rotateIn 1s ease-out;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      animation: slideInRight 0.7s ease-out;
+    }
+
+    /* Logo Styling */
+    .logo-svg {
+      display: flex;
+      align-items: center;
+      margin-right: 12px;
+      animation: rotateIn 1s ease-out;
+    }
+
+    .theme-logo {
+      width: 120px;
+      height: 40px;
+      filter: drop-shadow(0 0 0.65rem rgb(44, 142, 167)) brightness(0) saturate(100%) invert(9%) sepia(10%) saturate(200%) hue-rotate(9deg) brightness(95%) contrast(91%);
+      transition: filter var(--transition-speed), transform var(--transition-speed);
+      animation: scaleIn 1s ease-out;
+    }
+
+    .theme-logo:hover {
+      transform: scale(1.05);
+    }
+
+    /* Dark mode logo */
+    .dark-mode .theme-logo {
+      filter: drop-shadow(0 0 0.65rem rgb(255, 255, 255)) brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      font-size: 16px;
+      transition: color var(--transition-speed), transform var(--transition-speed);
+      position: relative;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: var(--primary);
+      transition: width var(--transition-speed);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      color: var(--text);
+      cursor: pointer;
+      font-size: 20px;
+      padding: 8px;
+      border-radius: 50%;
+      transition: background-color var(--transition-speed), transform var(--transition-speed);
+      animation: fadeIn 1s ease-out;
+    }
+
+    .theme-toggle:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+      transform: rotate(360deg);
+      transition: transform 0.7s ease-in-out, background-color var(--transition-speed);
+    }
+
+    .dark-mode .theme-toggle:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 60px 0 80px;
+      text-align: center;
+      animation: fadeIn 1s ease-out;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto 60px;
+      animation: slideInUp 1s ease-out;
+    }
+
+    .tagline {
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--primary);
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+      animation: slideInUp 1.1s ease-out;
+      opacity: 0;
+      animation-fill-mode: forwards;
+    }
+    h1 {
+      font-family: "Helvetica Neue", sans-serif;
+      font-size: 120px;
+      line-height: 1.05;
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: var(--text);
+      transition: color var(--transition-speed);
+      letter-spacing: -1.5px;
+      animation: slideInUp 1.2s ease-out;
+      opacity: 0;
+      animation-fill-mode: forwards;
+      background: linear-gradient(90deg, var(--text) 0%, var(--primary) 50%, var(--text) 100%);
+      background-size: 200% auto;
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;  /* Bu satırı değiştirdim */
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Shimmer animasyonunu ayrı bir öğeye uygulamak için */
+    h1::after {
+      content: "Code. Create. Inspire.";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: shimmer 5s linear infinite;
+      z-index: 1;
+    }
+
+
+    .hero p {
+      font-size: 28px;
+      margin-bottom: 40px;
+      color: var(--text-secondary);
+      transition: color var(--transition-speed);
+      font-weight: 400;
+      letter-spacing: -0.5px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      animation: slideInUp 1.3s ease-out;
+      opacity: 0;
+      animation-fill-mode: forwards;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: var(--primary);
+      color: white;
+      padding: 16px 32px;
+      border-radius: 980px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all var(--transition-speed);
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      animation: slideInUp 1.4s ease-out, pulse 2s infinite;
+      opacity: 0;
+      animation-fill-mode: forwards;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.7s;
+    }
+
+    .btn:hover {
+      background-color: var(--secondary);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(0, 113, 227, 0.2);
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .dark-mode .btn:hover {
+      box-shadow: 0 10px 20px rgba(10, 132, 255, 0.3);
+    }
+
+    .btn-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+    }
+
+    .btn-download i {
+      animation: bounce 2s infinite;
+    }
+
+    /* App Preview */
+    .app-preview {
+      max-width: 1000px;
+      margin: 0 auto;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 30px 60px var(--shadow);
+      transition: box-shadow var(--transition-speed), transform var(--transition-speed);
+      animation: scaleIn 1.5s ease-out;
+      transform-origin: center bottom;
+    }
+
+    .app-preview:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 40px 70px var(--shadow);
+    }
+
+    .app-preview img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform var(--transition-speed);
+    }
+
+    .app-preview:hover img {
+      transform: scale(1.02);
+    }
+
+    /* Slideshow */
+    .slideshow-section {
+      padding: 20px 0;
+      text-align: center;
+      opacity: 0;
+      animation: fadeIn 1s ease-out 0.5s forwards;
+    }
+
+    .section-header {
+      margin-bottom: 60px;
+      animation: slideInUp 1s ease-out;
+    }
+
+    .section-header h2 {
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+      animation: slideInUp 1.1s ease-out;
+    }
+
+    .section-header p {
+      font-size: 24px;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+      animation: slideInUp 1.2s ease-out;
+    }
+
+    .slideshow {
+      position: relative;
+      height: 600px;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 30px 60px var(--shadow);
+      transition: box-shadow var(--transition-speed), transform var(--transition-speed);
+      background-color: var(--card-bg);
+      animation: scaleIn 1.3s ease-out;
+    }
+
+    .slideshow:hover {
+      transform: scale(1.01);
+      box-shadow: 0 40px 80px var(--shadow);
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+      font-size: 24px;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .slide.active {
+      opacity: 1;
+      animation: scaleIn 0.7s ease-out;
+    }
+
+    .slide-content {
+      max-width: 80%;
+    }
+
+    .slide-navigation {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 12px;
+    }
+
+    .slide-nav-btn {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: rgba(142, 142, 147, 0.5);
+      border: none;
+      cursor: pointer;
+      transition: background-color var(--transition-speed), transform var(--transition-speed);
+    }
+
+    .slide-nav-btn.active {
+      background-color: var(--primary);
+      transform: scale(1.2);
+    }
+
+    .slide-nav-btn:hover {
+      transform: scale(1.2);
+    }
+
+    /* Features */
+    .features-section {
+      padding: 120px 0;
+      background-color: var(--card-bg);
+      transition: background-color var(--transition-speed);
+      opacity: 0;
+      animation: fadeIn 1s ease-out 0.7s forwards;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      text-align: center;
+      padding: 40px 20px;
+      transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+      border-radius: 16px;
+      opacity: 0;
+      animation-name: fadeIn;
+      animation-duration: 0.8s;
+      animation-fill-mode: forwards;
+    }
+
+    .feature-card:nth-child(1) { animation-delay: 0.3s; }
+    .feature-card:nth-child(2) { animation-delay: 0.5s; }
+    .feature-card:nth-child(3) { animation-delay: 0.7s; }
+    .feature-card:nth-child(4) { animation-delay: 0.9s; }
+    .feature-card:nth-child(5) { animation-delay: 1.1s; }
+    .feature-card:nth-child(6) { animation-delay: 1.3s; }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 30px var(--shadow);
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .feature-icon {
+      background-color: var(--primary);
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      color: white;
+      font-size: 32px;
+      transition: transform var(--transition-speed), background-color var(--transition-speed);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .feature-card:hover .feature-icon {
+      transform: scale(1.1) rotate(10deg);
+      background-color: var(--secondary);
+    }
+
+    .feature-card h3 {
+      font-size: 24px;
+      margin-bottom: 16px;
+      font-weight: 600;
+      color: var(--text);
+      transition: color var(--transition-speed);
+    }
+
+    .feature-card p {
+      color: var(--text-secondary);
+      transition: color var(--transition-speed);
+      font-size: 18px;
+      line-height: 1.5;
+    }
+
+    /* Download Section */
+    .download-section {
+      padding: 120px 0;
+      text-align: center;
+      opacity: 0;
+      animation: fadeIn 1s ease-out 0.9s forwards;
+    }
+
+    .download-card {
+      background-color: var(--card-bg);
+      border-radius: 32px;
+      padding: 80px;
+      max-width: 800px;
+      margin: 0 auto;
+      box-shadow: 0 30px 60px var(--shadow);
+      transition: background-color var(--transition-speed), box-shadow var(--transition-speed), transform var(--transition-speed);
+      animation: scaleIn 1.5s ease-out;
+    }
+
+    .download-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 40px 80px var(--shadow);
+    }
+
+    .download-title {
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: var(--text);
+      transition: color var(--transition-speed);
+      letter-spacing: -0.5px;
+      animation: slideInUp 1.1s ease-out;
+    }
+
+    .download-description {
+      font-size: 24px;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+      transition: color var(--transition-speed);
+      animation: slideInUp 1.2s ease-out;
+    }
+
+    .version-info {
+      margin-top: 24px;
+      color: var(--text-secondary);
+      font-size: 16px;
+      transition: color var(--transition-speed);
+      animation: fadeIn 1.4s ease-out;
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--card-bg);
+      color: var(--text);
+      padding: 80px 0 40px;
+      transition: background-color var(--transition-speed), color var(--transition-speed);
+      opacity: 0;
+      animation: fadeIn 1s ease-out 1.1s forwards;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      margin-bottom: 60px;
+    }
+
+    .footer-column {
+      animation: slideInUp 1s ease-out;
+      opacity: 0;
+      animation-fill-mode: forwards;
+    }
+
+    .footer-column:nth-child(1) { animation-delay: 0.3s; }
+    .footer-column:nth-child(2) { animation-delay: 0.5s; }
+    .footer-column:nth-child(3) { animation-delay: 0.7s; }
+    .footer-column:nth-child(4) { animation-delay: 0.9s; }
+
+    .footer-column h3 {
+      font-size: 20px;
+      margin-bottom: 24px;
+      color: var(--text);
+      font-weight: 600;
+      transition: color var(--transition-speed);
+      position: relative;
+      display: inline-block;
+    }
+
+    .footer-column h3::after {
+      content: '';
+      position: absolute;
+      width: 30px;
+      height: 2px;
+      bottom: -8px;
+      left: 0;
+      background-color: var(--primary);
+      transition: width var(--transition-speed);
+    }
+
+    .footer-column:hover h3::after {
+      width: 100%;
+    }
+
+    .footer-column ul {
+      list-style: none;
+    }
+
+    .footer-column ul li {
+      margin-bottom: 12px;
+    }
+
+    .footer-column a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color var(--transition-speed), transform var(--transition-speed);
+      display: inline-block;
+    }
+
+    .footer-column a:hover {
+      color: var(--primary);
+      transform: translateX(5px);
+    }
+
+    .copyright {
+      text-align: center;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+      color: var(--text-secondary);
+      font-size: 14px;
+      transition: color var(--transition-speed), border-color var(--transition-speed);
+      animation: fadeIn 1.5s ease-out;
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 992px) {
+      h1 {
+        font-size: 64px;
+      }
+
+      .hero p {
+        font-size: 24px;
+      }
+
+      .section-header h2 {
+        font-size: 42px;
+      }
+
+      .slideshow {
+        height: 500px;
+      }
+
+      .download-card {
+        padding: 60px 40px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 48px;
+      }
+
+      .hero p {
+        font-size: 20px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .slideshow {
+        height: 400px;
+      }
+
+      .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 576px) {
+      h1 {
+        font-size: 36px;
+      }
+
+      .hero {
+        padding: 80px 0 60px;
+      }
+
+      .slideshow-section,
+      .features-section,
+      .download-section {
+        padding: 80px 0;
+      }
+
+      .download-title {
+        font-size: 36px;
+      }
+
+      .download-description {
+        font-size: 20px;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Mobile menu button */
+    .mobile-menu-btn {
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 24px;
+      cursor: pointer;
+      display: none;
+      animation: fadeIn 1s ease-out;
+      transition: transform var(--transition-speed);
+    }
+
+    .mobile-menu-btn:hover {
+      transform: rotate(90deg);
+    }
+
+    /* Scroll Reveal Animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Mobile Navigation */
+.nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.mobile-close-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 24px;
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.mobile-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 99;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 70%;
+    height: 100vh;
+    background-color: var(--card-bg);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    transition: right 0.3s ease-in-out;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    padding: 60px 20px;
+  }
+
+  .nav-links.active {
+    right: 0;
+  }
+
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  .mobile-close-btn {
+    display: block;
+  }
+
+  .mobile-overlay.active {
+    display: block;
+  }
+}
+
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">
+          <button onclick="window.location.href='index.html#'" style="background: none; border: none; cursor: pointer; padding: 0;">
+            <img src="./Assets/logo.svg" alt="KodKit Logo" class="theme-logo" style="width: 140px; height: 50px; margin-right: 16px; vertical-align: middle;">
+          </button>
+        </div>
+
+        <div class="nav-links">
+          <a href="#">Home</a>
+          <a href="#features">Features</a>
+          <a href="faq.html">FAQ</a>
+          <a href="#screenshots">Screenshots</a>
+          <a href="#download">Download</a>
+          <a href="#about">About</a>
+          <a href="help.html">Help</a>
+        </div>
+        <button class="theme-toggle" id="themeToggle">
+          <i class="fas fa-moon"></i>
+        </button>
+        <button class="mobile-close-btn" id="mobileCloseBtn">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="nav-buttons">
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+          <i class="fas fa-bars"></i>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="tagline">Introducing KodKit</div>
+        <h1>Code. Create. Inspire.</h1>
+        <p>A forked version of Scratch 3.0, aiming to enhance.</p>
+        <a href="#download" class="btn btn-download">
+          <i class="fas fa-download"></i>
+          Download for Windows
+        </a>
+      </div>
+
+      <div class="app-preview">
+       <img src="./Assets/app0.png" alt="KodKit App Preview" style="border-radius: 24px;">
+        <!-- Placeholder for main app screenshot - you'll replace this with your actual UI -->
+        <div style="background-color: #f5f5f7; height:20px; display: flex; align-items: center; justify-content: center; font-size: 24px; color:rgb(124, 124, 255);">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slideshow Section -->
+  <section class="slideshow-section reveal" id="screenshots">
+    <div class="container">
+      <div class="section-header">
+        <h2>See KodKit in Action</h2>
+        <p>Discover how KodKit transforms the way one can code</p>
+      </div>
+
+      <div class="slideshow" id="slideshow">
+        <!-- Placeholder slides - you'll replace these with your actual UI screenshots -->
+        <div class="slide active">
+          <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #86868b;">
+            <img src="./Assets/app1.png" alt="KodKit Screenshot" style="max-width: 100%; max-height: 100%; border-radius: 24px;">
+          </div>
+        </div>
+        <div class="slide">
+          <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #86868b;">
+            <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #86868b;">
+              <img src="./Assets/app2sound.png" alt="KodKit Screenshot" style="max-width: 100%; max-height: 100%; border-radius: 24px;">
+            </div>
+          </div>
+        </div>
+        <div class="slide">
+          <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #86868b;">
+            <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #86868b;">
+              <img src="./Assets/app3assets.png" alt="KodKit Screenshot" style="max-width: 100%; max-height: 100%; border-radius: 24px;">
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation dots -->
+        <div class="slide-navigation" id="slideNavigation">
+          <button class="slide-nav-btn active" data-slide="0"></button>
+          <button class="slide-nav-btn" data-slide="1"></button>
+          <button class="slide-nav-btn" data-slide="2"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section reveal" id="features" >
+    <div id="about" class="container">
+      <div class="section-header">
+        <h2>Why Choose KodKit?</h2>
+        <p>Open-Source Scratch 3.0 fork that has new features*</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-puzzle-piece"></i>
+          </div>
+          <h3>Block-Based Coding</h3>
+          <p>Drag and drop colorful blocks to create programs without typing complex code.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-gamepad"></i>
+          </div>
+          <h3>Game Development</h3>
+          <p>Create your own games with characters, animations, and interactive elements.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-desktop"></i>
+          </div>
+          <h3>Windows Compatible</h3>
+          <p>Optimized for Windows systems with only online functionality (for now).</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-share-alt"></i>
+          </div>
+          <h3>Share Your Projects</h3>
+          <p>Export your creations to share with friends.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <h3>Learning Resources</h3>
+          <p>Access tutorials, examples, and guides to help you master coding concepts.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-code"></i>
+          </div>
+          <h3>Advanced Features</h3>
+          <p>Transition to text-based coding when you're ready with our advanced tools.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Download Section -->
+  <section class="download-section reveal" id="download">
+    <div class="container">
+      <div class="download-card">
+        <h2 class="download-title">Ready to start creating?</h2>
+        <p class="download-description">Download KodKit now and unleash your creativity</p>
+        <a href="https://drive.google.com/file/d/1jNtW62s9qtw4nDpoT4dc88GPps3GBUar/view?usp=drive_link" class="btn btn-download" id="downloadBtnSecondary">
+          <i class="fas fa-download"></i>
+          Download for Windows
+        </a>
+        <p class="version-info">Version Early | 291MB | Windows 10/11</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="reveal">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>KodKit</h3>
+          <ul>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#screenshots">Screenshots</a></li>
+            <li><a href="#download">Download</a></li>
+            <li><a href="#about">About</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Resources</h3>
+          <ul>
+            <li><a href="help.html">Documentation</a></li>
+            <li><a href="help.html">Tutorials</a></li>
+            <li><a href="help.html">Examples</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Support</h3>
+          <ul>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="help.html">Contact Us</a></li>
+            <li><a href="help.html">Report a Bug</a></li>
+            <li><a href="help.html">Request a Feature</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Legal</h3>
+          <ul>
+            <li><a href="tos.html">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2025 Ragno Games. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Dark Mode Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+
+    // Check for saved theme preference or use preferred color scheme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      body.classList.add('dark-mode');
+      themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    }
+
+    // Toggle theme
+    themeToggle.addEventListener('click', () => {
+      body.classList.toggle('dark-mode');
+
+      // Update button icon
+      if (body.classList.contains('dark-mode')) {
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        localStorage.setItem('theme', 'light');
+      }
+    });
+
+    // Slideshow Functionality
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const navButtons = document.querySelectorAll('.slide-nav-btn');
+    const slideCount = slides.length;
+
+    // Initialize slideshow
+    function showSlide(index) {
+      // Hide all slides
+      slides.forEach(slide => slide.classList.remove('active'));
+      navButtons.forEach(btn => btn.classList.remove('active'));
+
+      // Show current slide
+      slides[index].classList.add('active');
+      navButtons[index].classList.add('active');
+      currentSlide = index;
+    }
+
+    // Auto advance slides
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slideCount;
+      showSlide(currentSlide);
+    }
+
+    // Set up click handlers for navigation buttons
+    navButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const slideIndex = parseInt(button.getAttribute('data-slide'));
+        showSlide(slideIndex);
+      });
+    });
+
+    // Start slideshow
+    const slideInterval = setInterval(nextSlide, 5000);
+
+    // Scroll reveal functionality
+    function revealOnScroll() {
+      const reveals = document.querySelectorAll('.reveal');
+
+      reveals.forEach(element => {
+        const windowHeight = window.innerHeight;
+        const elementTop = element.getBoundingClientRect().top;
+        const elementVisible = 150;
+
+        if (elementTop < windowHeight - elementVisible) {
+          element.classList.add('active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
+
+    // Download button functionality
+    const downloadButtons = document.querySelectorAll('#downloadBtn, #downloadBtnSecondary');
+    downloadButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.location.href = "https://drive.google.com/file/d/1jNtW62s9qtw4nDpoT4dc88GPps3GBUar/view?usp=drive_link";
+      });
+    });
+
+    // Add parallax effect to hero section
+    window.addEventListener('scroll', function() {
+      const scrollPosition = window.scrollY;
+      const heroContent = document.querySelector('.hero-content');
+      const appPreview = document.querySelector('.app-preview');
+
+      if (scrollPosition < 600) {
+        heroContent.style.transform = `translateY(${scrollPosition * 0.15}px)`;
+        appPreview.style.transform = `translateY(${scrollPosition * 0.1}px)`;
+      }
+    });
+
+    // Add smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 100,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+
+  </script>
+  <script>
+
+</body>
+</html>

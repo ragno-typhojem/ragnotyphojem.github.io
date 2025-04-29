@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KodKit - Frequently Asked Questions</title>
+  <style>
+    :root {
+      /* Light Mode Colors */
+      --primary: #0071e3;
+      --secondary: #147ce5;
+      --accent: #06c;
+      --background: #f5f5f7;
+      --card-bg: #ffffff;
+      --text: #1d1d1f;
+      --text-secondary: #86868b;
+      --border: #d2d2d7;
+      --shadow: rgba(0, 0, 0, 0.1);
+
+      /* Transitions */
+      --transition-speed: 0.3s;
+    }
+
+    /* Dark Mode Colors */
+    .dark-mode {
+      --primary: rgb(100, 196, 209);
+      --secondary: #5ac8fa;
+      --accent: rgb(72, 251, 254);
+      --background: #1d1d1f;
+      --card-bg: #2c2c2e;
+      --text: #f5f5f7;
+      --text-secondary: #a1a1a6;
+      --border: #3d3d41;
+      --shadow: rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    }
+
+    body {
+      background-color: var(--background);
+      color: var(--text);
+      line-height: 1.5;
+      transition: background-color var(--transition-speed), color var(--transition-speed);
+      animation: fadeIn 1s ease-out;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Header */
+    header {
+      background-color: var(--card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 1px 0 var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 48px;
+      font-weight: 600;
+      color: var(--text);
+      transition: color var(--transition-speed);
+    }
+
+    .logo-svg {
+      display: flex;
+      align-items: center;
+      margin-right: 12px;
+    }
+
+    .theme-logo {
+      width: 120px;
+      height: 40px;
+      filter: drop-shadow(0 0 0.65rem rgb(44, 142, 167)) brightness(0) saturate(100%) invert(9%) sepia(10%) saturate(200%) hue-rotate(169deg) brightness(95%) contrast(91%);
+      transition: filter var(--transition-speed);
+    }
+
+    /* Dark mode logo */
+    .dark-mode .theme-logo {
+      filter: drop-shadow(0 0 0.65rem rgb(255, 255, 255)) brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      font-size: 16px;
+      transition: color var(--transition-speed);
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      color: var(--text);
+      cursor: pointer;
+      font-size: 20px;
+      padding: 8px;
+      border-radius: 50%;
+      transition: background-color var(--transition-speed);
+    }
+
+    .theme-toggle:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .dark-mode .theme-toggle:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Mobile menu button */
+    .mobile-menu-btn {
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 24px;
+      cursor: pointer;
+      display: none;
+    }
+
+    /* Page Header */
+    .page-header {
+      text-align: center;
+      padding: 80px 0 40px;
+    }
+
+    .page-header h1 {
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--text);
+      transition: color var(--transition-speed);
+    }
+
+    .page-header p {
+      font-size: 20px;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+      transition: color var(--transition-speed);
+    }
+
+    /* FAQ Content */
+    .faq-container {
+      max-width: 800px;
+      margin: 0 auto 80px;
+    }
+
+    .faq-category {
+      margin-bottom: 40px;
+    }
+
+    .category-title {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      color: var(--text);
+      transition: color var(--transition-speed);
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq-item {
+      margin-bottom: 24px;
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px var(--shadow);
+      transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+    }
+
+    .faq-question {
+      padding: 20px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 500;
+      color: var(--text);
+      transition: color var(--transition-speed);
+    }
+
+    .faq-question:hover {
+      color: var(--primary);
+    }
+
+    .faq-question i {
+      transition: transform var(--transition-speed);
+    }
+
+    .faq-answer {
+      padding: 0 20px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height var(--transition-speed), padding var(--transition-speed);
+      color: var(--text-secondary);
+    }
+
+    .faq-item.active .faq-question i {
+      transform: rotate(180deg);
+    }
+
+    .faq-item.active .faq-answer {
+      padding: 0 20px 20px;
+      max-height: 500px;
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--card-bg);
+      color: var(--text);
+      padding: 80px 0 40px;
+      transition: background-color var(--transition-speed), color var(--transition-speed);
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      margin-bottom: 60px;
+    }
+
+    .footer-column h3 {
+      font-size: 20px;
+      margin-bottom: 24px;
+      color: var(--text);
+      font-weight: 600;
+      transition: color var(--transition-speed);
+    }
+
+    .footer-column ul {
+      list-style: none;
+    }
+
+    .footer-column ul li {
+      margin-bottom: 12px;
+    }
+
+    .footer-column a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color var(--transition-speed);
+    }
+
+    .footer-column a:hover {
+      color: var(--primary);
+    }
+
+    .copyright {
+      text-align: center;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+      color: var(--text-secondary);
+      font-size: 14px;
+      transition: color var(--transition-speed), border-color var(--transition-speed);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 576px) {
+      .page-header h1 {
+        font-size: 36px;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">
+          <button onclick="window.location.href='index.html#'" style="background: none; border: none; cursor: pointer; padding: 0;">
+            <img src="./Assets/logo.svg" alt="KodKit Logo" class="theme-logo" style="width: 140px; height: 50px; margin-right: 16px; vertical-align: middle;">
+          </button>
+        </div>
+
+        <div class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="index.html#features">Features</a>
+          <a href="faq.html">FAQ</a>
+          <a href="index.html#screenshots">Screenshots</a>
+          <a href="index.html#download">Download</a>
+          <a href="index.html#about">About</a>
+          <a href="help.html">Help</a>
+        </div>
+        <button class="theme-toggle" id="themeToggle">
+          <i class="fas fa-moon"></i>
+        </button>
+        <button class="mobile-menu-btn">
+          <i class="fas fa-bars"></i>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container">
+      <h1>Frequently Asked Questions</h1>
+      <p>Find answers to the most common questions about KodKit</p>
+    </div>
+  </section>
+
+  <!-- FAQ Content -->
+  <section class="faq-container">
+    <div class="container">
+      <!-- General Questions -->
+      <div class="faq-category">
+        <h2 class="category-title">General Questions</h2>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            What is KodKit? <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>KodKit is a forked version of Scratch 3.0, designed to enhance the original platform with additional features and improvements. It's a block-based coding environment that allows users to create interactive stories, games, and animations without needing to learn complex programming syntax.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            Is KodKit free to use? <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Yes, KodKit is completely free to use. As an open-source project, we believe in making coding accessible to everyone without any cost barriers.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            What platforms does KodKit support? <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Currently, KodKit is available for Windows 10 and 11. We're working on expanding support to other platforms like macOS and Linux in future releases.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            How does KodKit differ from Scratch? <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>While KodKit is based on Scratch 3.0, we've added several enhancements including improved performance, additional coding blocks, expanded asset libraries, and better export options. Our goal is to maintain the simplicity of Scratch while adding features that more advanced users might need.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Technical Questions -->
+      <div class="faq-category">
+        <h2 class="category-title">Technical Questions</h2>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            What are the system requirements for KodKit? <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>KodKit requires:</p>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+              <li>Windows 10 or 11</li>
+              <li>4GB RAM (8GB recommended)</li>
+              <li>1GB free disk space</li>
+              <li>Intel Core i3 or equivalent (Core i5 or better recommended)</li>
+              <li>Internet connection for online features</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            Can I import my existing Scratch projects into KodKit? <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Yes, KodKit supports importing .sb3 files created with Scratch 3.0. Most projects should work without any modifications, though some might require minor adjustments if they use features that have been modified in KodKit.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            How do I update KodKit to the latest version? <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>KodKit includes an auto-update feature that checks for updates when you start the application (if you're connected to the internet). You can also manually check for updates from the Help menu within the application.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            Is an internet connection required to use KodKit? <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>KodKit can be used offline for most features, but an internet connection is required for sharing projects, accessing the online community, and downloading additional assets from our libraries.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project Questions -->
+      <div class="faq-category">
+        <h2 class="category-title">Project Questions</h2>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            How do I save my projects in KodKit? <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>KodKit automatically saves your work as you go. You can also manually save by clicking on "File" and then "Save" or by pressing Ctrl+S. Projects are saved in the .kk format (KodKit's native format) or can be exported as .sb3 for compatibility with Scratch.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            Can I share my KodKit projects online? <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Yes, KodKit allows you to share your projects through our online community platform. You can also export your projects as standalone applications or HTML5 web pages that can be hosted on your own website.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            Are there limits to project size or complexity? <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>KodKit has improved performance compared to standard Scratch, allowing for larger and more complex projects. However, extremely large projects with thousands of sprites or scripts may still experience performance issues depending on your computer's specifications.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>KodKit</h3>
+          <ul>
+            <li><a href="index.html#features">Features</a></li>
+            <li><a href="index.html#screenshots">Screenshots</a></li>
+            <li><a href="index.html#download">Download</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Resources</h3>
+          <ul>
+            <li><a href="#">Documentation</a></li>
+            <li><a href="#">Tutorials</a></li>
+            <li><a href="#">Examples</a></li>
+            <li><a href="#">Community</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Support</h3>
+          <ul>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="help.html">Help Center</a></li>
+            <li><a href="#">Report a Bug</a></li>
+            <li><a href="#">Request a Feature</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Legal</h3>
+          <ul>
+
+            <li><a href="tos.html">Terms of Service</a></li>
+
+          </ul>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2025 Ragno Games. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Dark Mode Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+
+    // Check for saved theme preference or use preferred color scheme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      body.classList.add('dark-mode');
+      themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    }
+
+    // Toggle theme
+    themeToggle.addEventListener('click', () => {
+      body.classList.toggle('dark-mode');
+
+      // Update button icon
+      if (body.classList.contains('dark-mode')) {
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        localStorage.setItem('theme', 'light');
+      }
+    });
+
+    // FAQ Accordion
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+
+      question.addEventListener('click', () => {
+        // Close other items
+        faqItems.forEach(otherItem => {
+          if (otherItem !== item && otherItem.classList.contains('active')) {
+            otherItem.classList.remove('active');
+          }
+        });
+
+        // Toggle current item
+        item.classList.toggle('active');
+      });
+    });
+  </script>
+</body>
+</html>
