@@ -308,6 +308,137 @@
         grid-template-columns: 1fr;
       }
     }
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 576px) {
+      .page-header h1 {
+        font-size: 36px;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+      }
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    .mobile-menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all var(--transition-speed) ease;
+    }
+
+    .mobile-menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Mobil Menü */
+    /* Basit Mobil Menü Stilleri */
+    .mobile-nav {
+      position: fixed;
+      top: 80px;
+      right: 0;
+      width: 100%;
+      background: var(--card-bg);
+      z-index: 1000;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height var(--transition-speed) ease;
+      box-shadow: 0 4px 6px var(--shadow);
+    }
+
+    .mobile-nav.active {
+      max-height: 500px;
+    }
+
+    .mobile-nav-links {
+      display: flex;
+      flex-direction: column;
+      padding: 0 24px;
+    }
+
+    .mobile-nav-links a {
+      padding: 12px 0;
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .mobile-menu-container {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+
+
+    .mobile-nav-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .mobile-close-btn {
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .mobile-nav-links a:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .mobile-theme-toggle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Mevcut responsive stiller */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -339,6 +470,35 @@
         </button>
       </nav>
     </div>
+  </header>
+
+  <!-- Mobil Menü Overlay ve Menü -->
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+  <nav class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav-header">
+      <div class="mobile-logo">
+        <img src="./Assets/logo.svg" alt="KodKit Logo" style="width: 120px; height: 40px;">
+      </div>
+      <button class="mobile-close-btn" id="mobileCloseBtn">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="mobile-nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#features">Features</a>
+      <a href="faq.html">FAQ</a>
+      <a href="index.html#screenshots">Screenshots</a>
+      <a href="index.html#download">Download</a>
+      <a href="index.html#about">About</a>
+      <a href="help.html">Help</a>
+    </div>
+    <div class="mobile-theme-toggle">
+      <span>Dark Mode</span>
+      <button class="theme-toggle" id="mobileModeToggle">
+        <i class="fas fa-moon"></i>
+      </button>
+    </div>
+  </nav>
   </header>
 
   <!-- Page Header -->
@@ -563,6 +723,48 @@
         // Toggle current item
         item.classList.toggle('active');
       });
+    });
+    // Mobile menu toggle
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const mobileNav = document.getElementById('mobileNav');
+    const mobileOverlay = document.getElementById('mobileMenuOverlay');
+    const mobileCloseBtn = document.getElementById('mobileCloseBtn');
+    const mobileModeToggle = document.getElementById('mobileModeToggle');
+
+    // Mobil Menü Açma
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileNav.classList.add('active');
+      mobileOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+
+    // Mobil Menü Kapatma
+    mobileCloseBtn.addEventListener('click', closeMobileMenu);
+    mobileOverlay.addEventListener('click', closeMobileMenu);
+
+    function closeMobileMenu() {
+      mobileNav.classList.remove('active');
+      mobileOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Mobil Tema Değiştirme
+    mobileModeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      const isDark = document.body.classList.contains('dark-mode');
+
+      // Ana tema toggle butonunu da güncelle
+      const mainThemeToggle = document.getElementById('themeToggle');
+      mainThemeToggle.innerHTML = isDark
+        ? '<i class="fas fa-sun"></i>'
+        : '<i class="fas fa-moon"></i>';
+
+      // Mobil tema toggle butonunu güncelle
+      mobileModeToggle.innerHTML = isDark
+        ? '<i class="fas fa-sun"></i>'
+        : '<i class="fas fa-moon"></i>';
+
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
     });
   </script>
 </body>
