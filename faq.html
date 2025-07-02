@@ -233,7 +233,9 @@
       padding: 0 20px 20px;
       max-height: 500px;
     }
-
+    .mobile-close-btn {
+      display: none;
+    }
     /* Footer */
     footer {
       background-color: var(--card-bg);
@@ -404,7 +406,12 @@
       padding: 20px;
       border-bottom: 1px solid var(--border);
     }
-
+    .mobile-nav.active .mobile-close-btn {
+      display: block; /* Sadece aktif menüde göster */
+      opacity: 1;
+      transform: scale(1);
+      animation: popIn 0.3s ease;
+    }
     .mobile-close-btn {
       background: none;
       border: none;
@@ -431,13 +438,60 @@
         display: none;
       }
 
-      .mobile-menu-btn {
-        display: block;
-      }
-
       .footer-content {
         grid-template-columns: repeat(2, 1fr);
       }
+      // CSS Güncellemeleri (style tag içinde)
+/* Mobil Menü Yeniden Yapılandırması */
+@media (max-width: 768px) {
+  .mobile-menu-btn {
+    display: block !important; /* ✅ Görünür hale getir */
+    position: fixed; /* ⚙️ Sabit konum */
+    right: 25px;
+    top: 28px;
+    z-index: 1001; /* 📌 En üst katman */
+    background: var(--card-bg);
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .theme-toggle {
+    position: absolute;
+    right: 25px;
+  }
+  .mobile-nav {
+    top: 0;
+    left: 0;
+    height: 100vh;
+    transform: translateX(100%); /* 🚀 Smooth slide efekti */
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .mobile-nav.active {
+    transform: translateX(0); /* 🎯 Aktif konum */
+  }
+
+  .mobile-close-btn {
+    display: block !important; /* ✅ Görünür hale getir */
+    position: absolute;
+    right: 25px;
+    top: 25px;
+    z-index: 1002;
+    background: var(--card-bg);
+    padding: 10px;
+    border-radius: 50%;
+  }
+
+  .mobile-nav-links {
+    padding-top: 80px; /* 📏 Logo için boşluk */
+  }
+
+  .mobile-nav-links a {
+    padding: 18px 24px; /* 👆 Daha tıklanabilir alan */
+    font-size: 18px;
+  }
+}
+
     }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -487,17 +541,11 @@
       <a href="index.html">Home</a>
       <a href="index.html#features">Features</a>
       <a href="faq.html">FAQ</a>
-      <a href="index.html#screenshots">Screenshots</a>
       <a href="index.html#download">Download</a>
       <a href="index.html#about">About</a>
       <a href="help.html">Help</a>
     </div>
-    <div class="mobile-theme-toggle">
-      <span>Dark Mode</span>
-      <button class="theme-toggle" id="mobileModeToggle">
-        <i class="fas fa-moon"></i>
-      </button>
-    </div>
+
   </nav>
   </header>
 
@@ -564,11 +612,15 @@
           <div class="faq-answer">
             <p>KodKit requires:</p>
             <ul style="margin-left: 20px; margin-top: 10px;">
-              <li>Windows 10 or 11</li>
-              <li>4GB RAM (8GB recommended)</li>
+              <li>Windows 7 - 8 - 10 or 11</li>
+              <li>2GB RAM (4GB recommended)</li>
               <li>1GB free disk space</li>
               <li>Intel Core i3 or equivalent (Core i5 or better recommended)</li>
-              <li>Internet connection for online features</li>
+              <li>Internet connection for all features</li>
+            </ul>
+       <ul style="margin-left: 20px; margin-top: 10px;">
+              <li>Any ARM Mac is suitable</li>
+
             </ul>
           </div>
         </div>
